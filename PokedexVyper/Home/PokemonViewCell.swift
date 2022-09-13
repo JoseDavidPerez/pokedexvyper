@@ -19,10 +19,17 @@ class PokemonViewCell : UITableViewCell {
         label.textColor = .darkGray
         return label
     }()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.backgroundColor = .orange
+        contentView.addSubview(labelname)
+        setupConstraint()
+    }
+    
+    override class func awakeFromNib() {
+        super.awakeFromNib()
+        
     }
     
     required init?(coder: NSCoder) {

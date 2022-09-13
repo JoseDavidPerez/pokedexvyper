@@ -25,7 +25,6 @@ extension HomePresenter : HomePresenterProtocol {
         view?.error(text: error.localizedDescription)
     }
     
-
     func getPokemon(){
         interactor?.apiPokemon()
     }

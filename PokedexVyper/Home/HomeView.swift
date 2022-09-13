@@ -17,6 +17,7 @@ class HomeView : UIViewController {
     
     var tableview : UITableView = {
       let table = UITableView()
+        table.backgroundColor = .gray
         table.translatesAutoresizingMaskIntoConstraints = false
         table.register(PokemonViewCell.self, forCellReuseIdentifier: PokemonViewCell.identifier)
       return table
@@ -28,12 +29,13 @@ class HomeView : UIViewController {
         setupUI()
         constraintsUI()
         self.presenter?.getPokemon()
-        tableview.dataSource = self
-        tableview.delegate = self
+
         
     }
     
     func setupUI(){
+        tableview.dataSource = self
+        tableview.delegate = self
         view.addSubview(tableview)
     }
     
@@ -80,7 +82,9 @@ extension HomeView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PokemonViewCell.identifier, for: indexPath) as! PokemonViewCell
         //cell.textLabel?.text = "hola"
-        
+        print("Configuracion de Vista")
+        print("\(pokemonData[indexPath.row].name)")
+        cell.setup(pokemon: pokemonData[indexPath.row])
         cell.labelname.text = pokemonData[indexPath.row].name
         return cell
     }
