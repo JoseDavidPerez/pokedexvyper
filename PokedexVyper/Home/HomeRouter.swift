@@ -10,17 +10,23 @@ import UIKit
 
 internal class HomeRouter {
     
-    public var navegation : UINavigationController?
+    static var navigation : UINavigationController?
     
 }
 
 extension HomeRouter : HomeRouterProtocol {
 
+    func respondeDetailPokemon(data: PokemonResponse){
+        
+        let detailpokemon = DetailPokemonRouter.createModule(navigation: HomeRouter.navigation, pokemon: data)
+        Self.navigation?.pushViewController(detailpokemon, animated: true)
+    }
     
-    public static func createModule(navegation : UINavigationController) -> UIViewController {
+    public static func createModule(navigation : UINavigationController) -> UIViewController {
         
         let viewController : HomeView = HomeView()
         
+        self.navigation = navigation
         let presenter = HomePresenter()
         let router = HomeRouter()
         let interactor = HomeInteractor()
@@ -33,9 +39,10 @@ extension HomeRouter : HomeRouterProtocol {
         
         interactor.presenter = presenter
         
-        router.navegation = navegation
+
         
         return viewController
+            
     }
 }
 

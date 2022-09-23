@@ -16,6 +16,7 @@ protocol HomePresenterProtocol {
     func getPokemon()
     func succesedPokemon(data: [PokemonResponse])
     func errorPokemon(error: Error)
+    func showDetailPokemon(data: PokemonResponse)
 }
 
 protocol HomeInteractorProtocol {
@@ -23,5 +24,5 @@ protocol HomeInteractorProtocol {
 }
 
 protocol HomeRouterProtocol {
-    
+    func respondeDetailPokemon(data: PokemonResponse)
 }

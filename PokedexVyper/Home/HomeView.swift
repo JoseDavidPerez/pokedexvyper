@@ -17,14 +17,14 @@ class HomeView : UIViewController {
     
     var tableview : UITableView = {
       let table = UITableView()
-        table.backgroundColor = .gray
+        table.backgroundColor = .red
         table.translatesAutoresizingMaskIntoConstraints = false
         table.register(PokemonViewCell.self, forCellReuseIdentifier: PokemonViewCell.identifier)
       return table
     }()
     
     override func viewDidLoad() {
-        view.backgroundColor = .green
+        view.backgroundColor = .red
         //Request es el nombre de una clase
         setupUI()
         constraintsUI()
@@ -34,6 +34,7 @@ class HomeView : UIViewController {
     }
     
     func setupUI(){
+
         tableview.dataSource = self
         tableview.delegate = self
         view.addSubview(tableview)
@@ -43,9 +44,9 @@ class HomeView : UIViewController {
         NSLayoutConstraint.activate([
             
             tableview.topAnchor.constraint(equalTo: view.topAnchor),
-            tableview.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableview.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableview.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tableview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            tableview.trailingAnchor.constraint(equalTo: view.trailingAnchor , constant: -20),
+            tableview.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30)
         
         ])
     }
@@ -62,7 +63,10 @@ extension HomeView: HomeViewProtocol {
     func reloadData(data: [PokemonResponse]){
         print(data.count)
         self.pokemonData = data
-        tableview.reloadData()
+        DispatchQueue.main.async {
+            self.tableview.reloadData()
+        }
+       
     }
     
     
@@ -81,14 +85,17 @@ extension HomeView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PokemonViewCell.identifier, for: indexPath) as! PokemonViewCell
-        //cell.textLabel?.text = "hola"
-        print("Configuracion de Vista")
-        print("\(pokemonData[indexPath.row].name)")
         cell.setup(pokemon: pokemonData[indexPath.row])
-        cell.labelname.text = pokemonData[indexPath.row].name
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.presenter?.showDetailPokemon(data: pokemonData[indexPath.row])
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
     
     
 }

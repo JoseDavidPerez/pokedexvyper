@@ -20,7 +20,9 @@ extension HomePresenter : HomePresenterProtocol {
         view?.reloadData(data: data)
     }
     
-    
+    func showDetailPokemon(data : PokemonResponse){
+        router?.respondeDetailPokemon(data: data)
+    }
     func errorPokemon(error: Error) {
         view?.error(text: error.localizedDescription)
     }

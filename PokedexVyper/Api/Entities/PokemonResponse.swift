@@ -9,11 +9,12 @@ import Foundation
 //Protocolo Codable
 struct PokemonResponse : Codable {
     
-    let attack : Int?
-    let defense : Int?
-    let description : String?
-    let type : String?
-    let name : String?
+    let attack : Int
+    let defense : Int
+    var description : String
+    var type : String
+    let name : String
+    let imageURL : String
     
     //Recodar evitar errores CodingKey y no CodingKeys
     private enum CodingKeys : String, CodingKey {
@@ -22,5 +23,6 @@ struct PokemonResponse : Codable {
         case description = "description"
         case type = "type"
         case name = "name"
+        case imageURL = "imageUrl"
     }
 }
